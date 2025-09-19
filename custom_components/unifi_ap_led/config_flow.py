@@ -1,6 +1,7 @@
 import voluptuous as vol
 import logging
 import aiohttp
+
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD
@@ -36,7 +37,7 @@ class UnifiApLedConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             host = user_input[CONF_HOST].strip()
             # Validate host (IP or hostname)
-            if not re.match(r"^(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", host):
+            if False: # not re.match(r"^(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", host):
                 errors["host"] = "invalid_host"
             else:
                 host = user_input[CONF_HOST]
@@ -157,6 +158,7 @@ class UnifiApLedConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     for s in self.sites
                 })
             }),
+            description_placeholders={"site_count": len(self.sites)},
             errors=errors
         )
 
